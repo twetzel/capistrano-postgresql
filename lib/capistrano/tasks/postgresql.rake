@@ -35,6 +35,14 @@ end
 
 namespace :postgresql do
 
+  desc 'Install PostgreSQL'
+  task :create_database do
+    on roles :db do
+      execute :sudo, 'apt-get -y update'
+      execute :sudo, 'apt-get -y install postgresql libpq-dev'
+    end
+  end
+
   desc 'Steps to upgrade the gem to version 4.0'
   task :upgrade4 do
     on roles :db do
