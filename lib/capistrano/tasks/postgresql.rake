@@ -36,7 +36,7 @@ end
 namespace :postgresql do
 
   desc 'Install PostgreSQL'
-  task :create_database do
+  task :install do
     on roles :db do
       execute :sudo, 'apt-get -y update'
       execute :sudo, 'apt-get -y install postgresql libpq-dev'
