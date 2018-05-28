@@ -30,7 +30,7 @@ Put the following in your application's `Gemfile`:
 
     group :development do
       gem 'capistrano', '~> 3.2.0'
-      gem 'capistrano-postgresql', '~> 4.2.0'
+      gem 'capistrano-postgresql', '~> 4.8.0'
     end
 
 Then:
@@ -42,15 +42,17 @@ Then:
 If you're deploying a standard rails app, all you need to do is put
 the following in `Capfile` file:
 
-    require 'capistrano/postgresql'
+```
+require 'capistrano/postgresql' 
+```
 
-Make sure the `deploy_to` path exists and has the right privileges on the
-server (i.e. `/var/www/myapp`).<br/>
-Or just install
-[capistrano-safe-deploy-to](https://github.com/capistrano-plugins/capistrano-safe-deploy-to)
-plugin and don't think about it.
+* Make sure the `deploy_to` path exists and has the right privileges on the
+server (i.e. `/var/www/myapp`). Warning: The ~ symbol (i.e. `~/myapp`) is not supported.
+* Within your app/config/deploy/{env}.rb files, you need to specify at least one :app and one :db server. 
+* It's also suggested to specify `:primary => true` on the end of your primary :db server line.
+* Optionally, you can run psql commands WITHOUT sudo if needed. Set the following (which defaults to false): `set :pg_without_sudo, true`
 
-To setup the server(s), run:
+Finally, to setup the server(s), run:
 
     $ bundle exec cap production setup
 
